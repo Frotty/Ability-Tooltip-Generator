@@ -3,10 +3,10 @@ import public ChannelAbilityPreset
 import HashMap
 
 @configurable constant TITLE_COLOR = "|cff3B97D3"
-@configurable constant TITLE_TTYPE = "Targettype:"
+@configurable constant TITLE_TTYPE = "Target Type:"
 @configurable constant MAX_TITLES = 10
-@configurable constant LEARN_PATTERN = "[|cffFFCC00$hotkey$|r] |cffFFCC00Learn|r $name$ - [|cffffcc00Level %d|r]"
-@configurable constant NORMAL_ACTIVE_PATTERN = "$name$ - Level $lvl$ [|cffFFCC00$hotkey$|r]"
+@configurable constant LEARN_PATTERN = "|cffFFCC00Learn|r $name$ - [|cffffcc00Level %d|r]"
+@configurable constant NORMAL_ACTIVE_PATTERN = "$name$ - Level $lvl$"
 @configurable constant NORMAL_PASSIVE_PATTERN = "$name$ - Level $lvl$"
 
 public class AbilityTooltipGenerator implements TooltipGenerator
@@ -85,8 +85,8 @@ public class AbilityTooltipGenerator implements TooltipGenerator
 				for i = 1 to levels
 					tmp += fixValue(propMap.get(key).run(i)) + "/"
 			s += TITLE_COLOR + key + ":|r " + colorLevelValue(tmp.substring(0, tmp.length() - 1), lvl, levels) + "\n"
-		s+= "\n"
-		s+= description
+		s += "\n"
+		s += "|cff919191" + description + "|r"
 		return s
 
 	private static function fixValue(string value) returns string
@@ -120,4 +120,6 @@ public class AbilityTooltipGenerator implements TooltipGenerator
 		else
 			_newString = oldString.substring(0, charPos[lvl-2]) + "|cffFFCC00" + oldString.substring(charPos[lvl-2], charPos[lvl-1]) + "|r" + oldString.substring(charPos[lvl-1], oldString.length())
 		return _newString
+
+
 
