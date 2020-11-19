@@ -30,7 +30,7 @@ public class AbilityTooltipGenerator implements TooltipGenerator
 		levels = propMap.has("Levels") ? fixValue(propMap.getAndRemove("Levels").run(0)).toInt() : 1
 		name = propMap.has("Name") ? propMap.getAndRemove("Name").run(0) : "unnamed"
 		hotkey = propMap.has("Hotkey") ? propMap.getAndRemove("Hotkey").run(0) : "Q"
-		targettype = propMap.has("Targettype") ? propMap.get("Targettype").run(0).toInt() castTo Targettype : Targettype.NONE
+		targettype = propMap.has("Target Type") ? propMap.get("Target Type").run(0).toInt() castTo Targettype : Targettype.NONE
 		def..setTooltipLearn(generateTooltipLearn())
 		..setTooltipLearnExtended(generateTooltipExtended(-1, true))
 		for i = 1 to levels
@@ -71,8 +71,19 @@ public class AbilityTooltipGenerator implements TooltipGenerator
 
 		for key in propMap
 			var tmp = ""
-			for i = 1 to levels
-				tmp += fixValue(propMap.get(key).run(i)) + "/"
+			var isConstantValue = true
+			let val = fixValue(propMap.get(key).run(1))
+			for i = 2 to levels
+				let tval = fixValue(propMap.get(key).run(i))
+				if val != tval
+					isConstantValue = false
+					break
+				
+			if isConstantValue
+				tmp += "|cffFFCC00" + val + "|r "
+			else
+				for i = 1 to levels
+					tmp += fixValue(propMap.get(key).run(i)) + "/"
 			s += TITLE_COLOR + key + ":|r " + colorLevelValue(tmp.substring(0, tmp.length() - 1), lvl, levels) + "\n"
 		s+= "\n"
 		s+= description
