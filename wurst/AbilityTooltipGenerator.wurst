@@ -8,6 +8,7 @@ import HashMap
 @configurable constant LEARN_PATTERN = "|cffFFCC00Learn|r $name$ - [|cffffcc00Level %d|r]"
 @configurable constant NORMAL_ACTIVE_PATTERN = "$name$ - Level $lvl$"
 @configurable constant NORMAL_PASSIVE_PATTERN = "$name$ - Level $lvl$"
+@configurable constant DESCRIPTION_PATTERN = "|cff919191$description$|r"
 
 public class AbilityTooltipGenerator implements TooltipGenerator
 	private constant propMap = new IterableMap<string, StringLevelClosure>
@@ -86,7 +87,7 @@ public class AbilityTooltipGenerator implements TooltipGenerator
 					tmp += fixValue(propMap.get(key).run(i)) + "/"
 			s += TITLE_COLOR + key + ":|r " + colorLevelValue(tmp.substring(0, tmp.length() - 1), lvl, levels) + "\n"
 		s += "\n"
-		s += "|cff919191" + description + "|r"
+		s += DESCRIPTION_PATTERN.replace("$description$", description)
 		return s
 
 	private static function fixValue(string value) returns string
