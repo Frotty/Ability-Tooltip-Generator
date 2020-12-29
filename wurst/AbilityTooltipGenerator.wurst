@@ -79,7 +79,7 @@ public class AbilityTooltipGenerator implements TooltipGenerator
 				if val != tval
 					isConstantValue = false
 					break
-				
+
 			if isConstantValue
 				tmp += "|cffFFCC00" + val + "|r "
 			else
@@ -117,9 +117,9 @@ public class AbilityTooltipGenerator implements TooltipGenerator
 		else if lvl == 1
 			_newString = "|cffFFCC00" + oldString.substring(0, charPos[0]) + "|r" + oldString.substring(charPos[0], oldString.length())
 		else if lvl == maxLevel
-			_newString = oldString.substring(0, charPos[lvl-2]) + "|cffFFCC00" + oldString.substring(charPos[lvl-2], oldString.length()) + "|r"
+			_newString = oldString.substring(0, charPos[lvl-2] + 1) + "|cffFFCC00" + oldString.substring(charPos[lvl-2] + 1, oldString.length()) + "|r"
 		else
-			_newString = oldString.substring(0, charPos[lvl-2]) + "|cffFFCC00" + oldString.substring(charPos[lvl-2], charPos[lvl-1]) + "|r" + oldString.substring(charPos[lvl-1], oldString.length())
+			_newString = oldString.substring(0, charPos[lvl-2] + 1) + "|cffFFCC00" + oldString.substring(charPos[lvl-2] + 1, charPos[lvl-1]) + "|r" + oldString.substring(charPos[lvl-1], oldString.length())
 		return _newString
 
 
