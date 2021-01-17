@@ -19,7 +19,7 @@ public class AbilityTooltipGenerator implements TooltipGenerator
 	private var name = ""
 	private var targettype = Targettype.NONE
 
-	construct(TargetType ttype, string description)
+	construct(Targettype ttype, string description)
 		this.description = description
 		this.targettype = ttype
 
