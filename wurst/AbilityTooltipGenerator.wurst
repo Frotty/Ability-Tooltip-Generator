@@ -35,7 +35,7 @@ public class AbilityTooltipGenerator implements TooltipGenerator
 		levels = propMap.has("Levels") ? fixValue(propMap.getAndRemove("Levels").run(0)).toInt() : 1
 		name = propMap.has("Name") ? propMap.getAndRemove("Name").run(0) : "unnamed"
 		hotkey = propMap.has("Hotkey") ? propMap.getAndRemove("Hotkey").run(0) : "Q"
-		targettype = propMap.has("Target Type") ? propMap.getAndRemove("Target Type").run(0).toInt() castTo Targettype : Targettype.NONE
+		targettype = propMap.has("Target Type") ? propMap.getAndRemove("Target Type").run(0).toInt() castTo Targettype : targettype
 		def..setTooltipLearn(generateTooltipLearn())
 		..setTooltipLearnExtended(generateTooltipExtended(-1, true))
 		for i = 1 to levels
