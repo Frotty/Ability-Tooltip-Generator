@@ -5,11 +5,19 @@ import HashMap
 @configurable constant TITLE_COLOR = "|cff3B97D3"
 @configurable constant TITLE_TTYPE = "Target Type:"
 @configurable constant MAX_TITLES = 10
-@configurable constant LEARN_PATTERN = "|cffFFCC00Learn|r $name$ - [|cffffcc00Level %d|r]"
-@configurable constant NORMAL_ACTIVE_PATTERN = "$name$ - Level $lvl$"
-@configurable constant NORMAL_PASSIVE_PATTERN = "$name$ - Level $lvl$"
-@configurable constant DESCRIPTION_PATTERN = "|cff919191$description$|r"
 
+@configurable function buildLearnTooltip(string name) returns string
+	return "|cffFFCC00Learn|r " + name + " - [|cffffcc00Level %d|r]"
+
+@configurable function buildActiveTooltip(string name, int lvl) returns string
+	return name + "  - Level " + lvl.toString()
+
+@configurable function buildPassiveTooltip(string name, int lvl) returns string
+	return name + "  - Level " + lvl.toString()
+
+@configurable function buildDescription(string description) returns string
+	return "|cff919191" + description + "|r"
+	
 public class AbilityTooltipGenerator implements TooltipGenerator
 	private constant propMap = new IterableMap<string, StringLevelClosure>
 	private var description = ""
@@ -43,26 +51,13 @@ public class AbilityTooltipGenerator implements TooltipGenerator
 			..setTooltipNormalExtended(i, generateTooltipExtended(i, false))
 
 	private function generateTooltipLearn() returns string
-		return replaceRefs(LEARN_PATTERN)
+		return buildLearnTooltip(name)
 
 	private function generateTooltipNormal(int lvl) returns string
 		if targettype == Targettype.PASSIVE
-			return replaceRefs(NORMAL_PASSIVE_PATTERN, lvl)
+			return buildPassiveTooltip(name, lvl)
 		else
-			return replaceRefs(NORMAL_ACTIVE_PATTERN, lvl)
-
-	private function replaceRefs(string old, int lvl) returns string
-		var newString = old
-		newString = newString.replace("$name$", name)
-		newString = newString.replace("$hotkey$", hotkey.toUpperCase())
-		newString = newString.replace("$lvl$", lvl.toString())
-		return newString
-
-	private function replaceRefs(string old) returns string
-		var newString = old
-		newString = newString.replace("$name$", name)
-		newString = newString.replace("$hotkey$", hotkey.toUpperCase())
-		return newString
+			return buildActiveTooltip(name, lvl)
 
 	private function generateTooltipExtended(int lvl, boolean learn) returns string
 		var s = ""
@@ -91,7 +86,7 @@ public class AbilityTooltipGenerator implements TooltipGenerator
 					tmp += fixValue(propMap.get(key).run(i)) + "/"
 			s += TITLE_COLOR + key + ":|r " + colorLevelValue(tmp.substring(0, tmp.length() - 1), lvl, levels) + "\n"
 		s += "\n"
-		s += DESCRIPTION_PATTERN.replace("$description$", description)
+		s += buildDescription(description)
 		return s
 
 	private static function fixValue(string value) returns string
