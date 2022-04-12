@@ -91,6 +91,8 @@ public class AbilityTooltipGenerator implements TooltipGenerator
 		return s
 
 	private static function fixValue(string value) returns string
+		if value == ""
+			return ""
 		var s = value
 		let len = s.length()
 		let lastChar = s.substring(len-1, len)
